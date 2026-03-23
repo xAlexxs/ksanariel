@@ -140,8 +140,62 @@
 </div>
 
 </div>
+<div class="image-modal" id="imageModal">
+    <span class="close">&times;</span>
 
-</body>
+    <span class="nav prev">&#10094;</span>
+    <span class="nav next">&#10095;</span>
 
-</html>
+    <img class="modal-content" id="modalImg">
+</div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+const images = document.querySelectorAll('.gallery-track img');
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+const closeBtn = document.querySelector('.close');
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
+
+let currentIndex = 0;
+
+// відкриття
+images.forEach((img, index) => {
+    img.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        modalImg.src = img.src;
+        currentIndex = index;
+    });
+});
+
+// закриття
+closeBtn.onclick = () => modal.style.display = 'none';
+
+modal.onclick = (e) => {
+    if(e.target === modal){
+        modal.style.display = 'none';
+    }
+}
+
+// вперед
+nextBtn.onclick = () => {
+    currentIndex++;
+    if(currentIndex >= images.length){
+        currentIndex = 0;
+    }
+    modalImg.src = images[currentIndex].src;
+}
+
+// назад
+prevBtn.onclick = () => {
+    currentIndex--;
+    if(currentIndex < 0){
+        currentIndex = images.length - 1;
+    }
+    modalImg.src = images[currentIndex].src;
+}
+
+});
+</script>
